@@ -225,22 +225,6 @@ flutter test integration_test/
 
 ---
 
-## 🗺️ Roadmap
-
-- [x] Backend FastAPI con PostgreSQL
-- [x] Dashboard web en tiempo real
-- [x] Integración CTI feeds (URLhaus, PhishTank, VirusTotal)
-- [x] ML retraining pipeline
-- [x] Anti-tampering detection
-- [ ] JWT authentication completo
-- [ ] Redis para caché distribuido
-- [ ] TensorFlow Lite on-device
-- [ ] CI/CD pipeline
-- [ ] Soporte para iOS
-- [ ] Dashboard móvil nativo
-
----
-
 ## 💰 Apoya Este Proyecto
 
 ¡Tu apoyo me ayuda a dedicar más tiempo al desarrollo de código abierto! 🙏
