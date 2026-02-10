@@ -1,170 +1,343 @@
-# Mobile Threat Defense (MTD) Platform
+# 🛡️ HispanShield - Mobile Threat Defense Platform
+
+<div align="center">
+
+![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)
+![Flutter](https://img.shields.io/badge/Flutter-3.0+-blue.svg)
+![Kotlin](https://img.shields.io/badge/Kotlin-1.9+-purple.svg)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Active-success.svg)
+
+**Solución completa de seguridad móvil para Android con esteroides** 💪
+
+[Características](#-características-principales) • [Instalación](#-instalación) • [Arquitectura](#-arquitectura) • [Donar](#-apoya-este-proyecto)
+
+</div>
+
+---
 
 ## 🎯 Visión General
 
-Solución completa de seguridad móvil para Android que combina:
-- **Detección en Dispositivo**: Análisis de SMS, llamadas y aplicaciones
-- **Threat Intelligence**: Correlación con feeds CTI y MITRE ATT&CK for Mobile
-- **IA/ML**: Modelos de detección avanzada con reentrenamiento automatizado
-- **Privacy by Design**: Minimización de datos y cifrado extremo a extremo
-- **Dashboard Web**: Monitoreo en tiempo real y gestión centralizada
-- **Base de Datos**: PostgreSQL con modelos relacionales completos
-- **CTI Feeds**: Integración real con URLhaus, PhishTank, VirusTotal
-- **Anti-Tampering**: Detección de root, emuladores y modificaciones
+HispanShield es una plataforma MTD (Mobile Threat Defense) de código abierto que combina análisis en dispositivo, inteligencia de amenazas y machine learning para proteger dispositivos Android contra amenazas avanzadas.
 
-## ✨ Nuevas Características (Fase 6)
+### ⚡ Características Principales
 
-### 🗄️ Base de Datos PostgreSQL
-- Modelos SQLAlchemy completos con relaciones
-- Migraciones Alembic para control de versiones
-- Pool de conexiones optimizado
-- Almacenamiento persistente de eventos, alertas e IOCs
+#### 🔍 Detección Avanzada
+- **Análisis de SMS y Llamadas**: Detección de phishing y fraude en tiempo real
+- **Escaneo de Aplicaciones**: Verificación de apps instaladas contra bases de datos de malware
+- **Machine Learning**: Modelos ML con reentrenamiento automatizado
+- **Threat Intelligence**: Integración con URLhaus, PhishTank y VirusTotal
 
-### 📊 Dashboard Web
-- Interfaz moderna con estadísticas en tiempo real
-- Visualización de alertas críticas
-- Top threat indicators
-- Métricas de modelos ML
-- Auto-refresh cada 30 segundos
+#### 🛡️ Seguridad Reforzada
+- **Anti-Tampering**: Detección de root, emuladores y debuggers
+- **Privacy by Design**: Cifrado extremo a extremo y minimización de datos
+- **MITRE ATT&CK Coverage**: Mapeo con framework ATT&CK for Mobile
+- **Verificación de Integridad**: Validación de firma digital de aplicaciones
 
-### 🤖 ML Retraining Pipeline
-- Recolección automatizada de datos etiquetados
-- Entrenamiento programado (Celery)
-- Versionado de modelos
-- Métricas de rendimiento (accuracy, precision, recall)
-- Activación controlada de modelos
+#### 📊 Monitoreo y Gestión
+- **Dashboard Web**: Interface moderna con estadísticas en tiempo real
+- **Base de Datos PostgreSQL**: Almacenamiento persistente de eventos y alertas
+- **API RESTful**: Endpoints completos para integración
+- **Auto-refresh**: Actualización automática de feeds cada hora
 
-### 🌐 Real CTI Feeds
-- URLhaus (malicious URLs feed)
-- PhishTank (phishing database)
-- VirusTotal API (hash lookup)
-- Actualización automática cada hora
+#### 🤖 Machine Learning Pipeline
+- **Recolección Automatizada**: Datos etiquetados para entrenamiento
+- **Versionado de Modelos**: Control de versiones y métricas de rendimiento
+- **Reentrenamiento Programado**: Celery para tareas asíncronas
+- **Activación Controlada**: Deployment seguro de nuevos modelos
 
-### 🛡️ Anti-Tampering
-- Detección de root (múltiples métodos)
-- Verificación de firma de app
-- Detección de emuladores
-- Detección de debugger
-- Scoring de amenaza integrado
-
+---
 
 ## 📁 Estructura del Proyecto
 
 ```
-├── backend/               # Python FastAPI backend
+hispan-shield/
+├── backend/               # Backend Python con FastAPI
 │   ├── app/
 │   │   ├── api/          # REST API endpoints
-│   │   ├── core/         # Config y seguridad
-│   │   ├── ml/           # Modelos ML
-│   │   ├── schemas/      # Pydantic models
+│   │   ├── core/         # Configuración y seguridad
+│   │   ├── ml/           # Modelos de Machine Learning
+│   │   ├── models/       # Modelos SQLAlchemy
+│   │   ├── schemas/      # Pydantic schemas
 │   │   └── services/     # Lógica de negocio
-│   │       └── threat_intel/  # CTI y MITRE
+│   │       └── threat_intel/  # CTI y MITRE ATT&CK
+│   ├── dashboard/        # Dashboard web
+│   ├── alembic/          # Migraciones de base de datos
 │   └── requirements.txt
 │
-└── mobile_app/           # Flutter Android app
-    ├── android/          # Código nativo (Kotlin)
+└── mobile_app/           # App móvil Flutter + Kotlin
+    ├── android/          # Código nativo Android (Kotlin)
     │   └── app/src/main/
-    │       ├── kotlin/   # Receivers, MainActivity
+    │       ├── kotlin/   # BroadcastReceivers, MainActivity
     │       └── AndroidManifest.xml
     └── lib/
         ├── core/         # Servicios compartidos
         └── features/     # Módulos por funcionalidad
 ```
 
-## 🚀 Configuración Rápida
+---
 
-### Backend (Python)
+## 🚀 Instalación
+
+### Requisitos Previos
+
+- Python 3.9+
+- PostgreSQL 15+
+- Flutter 3.0+
+- Android SDK
+- Git
+
+### Backend (Python FastAPI)
 
 ```bash
-cd backend
+# Clonar el repositorio
+git clone https://github.com/murdok1982/hispan-shield.git
+cd hispan-shield/backend
+
+# Crear entorno virtual
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Instalar dependencias
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+
+# Configurar base de datos PostgreSQL
+# Editar variables de entorno en .env
+
+# Ejecutar migraciones
+alembic upgrade head
+
+# Iniciar servidor
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Accede a la documentación interactiva: http://localhost:8000/docs
+**Documentación API**: http://localhost:8000/docs
 
-### Mobile App (Flutter)
+### Mobile App (Flutter + Kotlin)
 
 ```bash
 cd mobile_app
+
+# Instalar dependencias
 flutter pub get
-flutter create .  # Genera archivos nativos si faltan
+
+# Generar archivos nativos (si es necesario)
+flutter create .
+
+# Ejecutar en dispositivo/emulador
 flutter run
+
+# Build APK de producción
+flutter build apk --release
 ```
+
+---
 
 ## 🔐 Arquitectura de Seguridad
 
 ### Flujo de Datos
 
-1. **Dispositivo → Backend**: Eventos hasheados con SHA-256
-2. **Backend → CTI**: Consulta IOCs y mapeo MITRE
-3. **Backend → IA**: Análisis con modelos ML
-4. **Backend → Dispositivo**: Alertas y recomendaciones
+```
+[Dispositivo Android]
+       ↓ (HTTPS + TLS 1.3)
+  [Backend FastAPI]
+       ↓
+  ┌────┴────┐
+  ↓         ↓
+[CTI Feeds] [ML Models]
+  ↓         ↓
+[PostgreSQL Database]
+  ↓
+[Dashboard Web]
+```
 
-### Componentes Clave
+### Componentes de Seguridad
 
-- **Rules Engine**: Detección estática basada en reglas
-- **MITRE Mapper**: Correlación con ATT&CK Mobile
-- **IOC Storage**: Base de indicadores de compromiso
-- **Correlation Engine**: Fusión de múltiples señales
+1. **Hash de Datos Sensibles**: Números de teléfono hasheados con SHA-256
+2. **Rules Engine**: Detección basada en reglas predefinidas
+3. **MITRE Mapper**: Correlación con técnicas ATT&CK Mobile
+4. **IOC Storage**: Base de indicadores de compromiso
+5. **Correlation Engine**: Fusión de señales de múltiples fuentes
 
-## 📊 MITRE ATT&CK Coverage
+### 📊 Cobertura MITRE ATT&CK
 
-| Técnica | Descripción | Detección |
-|---------|-------------|-----------|
-| T1476 | SMS Phishing | ✅ NLP + URL analysis |
-| T1478 | Install Malicious App | ✅ Signature + IOC lookup |
-| T1412 | Capture SMS | ✅ Permission analysis |
-| T1430 | Location Tracking | ✅ Permission anomaly |
+| Técnica ID | Descripción | Estado |
+|-----------|-------------|--------|
+| T1476 | Deliver Malicious App via Other Means | ✅ Implementado |
+| T1478 | Install Insecure or Malicious Configuration | ✅ Implementado |
+| T1412 | Capture SMS Messages | ✅ Implementado |
+| T1430 | Location Tracking | ✅ Implementado |
+| T1533 | Data from Local System | ✅ Implementado |
+
+---
+
+## 📖 API Endpoints
+
+### Autenticación
+- `POST /api/v1/auth/device/register` - Registrar nuevo dispositivo
+- `POST /api/v1/auth/device/token` - Obtener token de acceso
+
+### Eventos
+- `POST /api/v1/events/sms` - Ingestar evento SMS
+- `POST /api/v1/events/call` - Ingestar evento de llamada
+- `POST /api/v1/events/apps` - Batch de aplicaciones instaladas
+- `GET /api/v1/events/stats` - Estadísticas de eventos
+
+### Threat Intelligence
+- `GET /api/v1/threat-intel/iocs` - Obtener IOCs actuales
+- `POST /api/v1/threat-intel/lookup` - Buscar IOC específico
+
+### Dashboard
+- `GET /dashboard` - Dashboard web con métricas en tiempo real
+
+### Health Check
+- `GET /health` - Estado del servicio
+
+---
+
+## 🛡️ Privacidad y Protección de Datos
+
+- ✅ **Sin almacenamiento de contenido completo**: Nunca guardamos texto íntegro de SMS
+- ✅ **Hashing de PII**: Números de teléfono siempre hasheados
+- ✅ **ML on-device**: Clasificación inicial en el dispositivo
+- ✅ **Minimización de datos**: Solo metadata crítica al backend
+- ✅ **Cifrado E2E**: Comunicaciones cifradas con TLS 1.3
+- ✅ **GDPR Compliant**: Diseño conforme a regulaciones de privacidad
+
+---
 
 ## 🧪 Testing
 
 ### Backend
 ```bash
-# Placeholder para tests unitarios
-pytest tests/
+cd backend
+pytest tests/ -v --cov=app
 ```
 
-### Mobile
+### Mobile App
 ```bash
+cd mobile_app
 flutter test
+flutter test integration_test/
 ```
 
-## 📖 API Endpoints
+---
 
-### Autenticación
-- `POST /api/v1/auth/device/register` - Registro de dispositivo
+## 🗺️ Roadmap
 
-### Eventos
-- `POST /api/v1/events/sms` - Ingestar evento SMS
-- `POST /api/v1/events/call` - Ingestar evento de llamada
-- `POST /api/v1/events/apps` - Batch de apps instaladas
+- [x] Backend FastAPI con PostgreSQL
+- [x] Dashboard web en tiempo real
+- [x] Integración CTI feeds (URLhaus, PhishTank, VirusTotal)
+- [x] ML retraining pipeline
+- [x] Anti-tampering detection
+- [ ] JWT authentication completo
+- [ ] Redis para caché distribuido
+- [ ] TensorFlow Lite on-device
+- [ ] CI/CD pipeline
+- [ ] Soporte para iOS
+- [ ] Dashboard móvil nativo
 
-### Status
-- `GET /health` - Health check
-- `GET /api/v1/events/stats` - Estadísticas de eventos
+---
 
-## 🛡️ Privacidad
+## 💰 Apoya Este Proyecto
 
-- **Sin almacenamiento de contenido**: Nunca guardamos el texto completo de SMS
-- **Hashing**: Números de teléfono siempre hasheados con SHA-256
-- **On-device ML**: Clasificación inicial en el dispositivo
-- **Minimización**: Solo metadata crítica enviada al backend
+¡Tu apoyo me ayuda a dedicar más tiempo al desarrollo de código abierto! 🙏
 
-## 🔧 Próximos Pasos
+### Bitcoin (BTC)
 
-1. **Database Integration**: Migrar de almacenamiento en memoria a PostgreSQL
-2. **JWT Real**: Implementar autenticación JWT completa con python-jose
-3. **Redis**: Caché distribuido y rate limiting
-4. **TF Lite**: Integrar modelos TensorFlow Lite en móvil
-5. **CI/CD**: Pipeline de testing y deployment
+![Bitcoin](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)
 
-## 📝 Licencia
+```
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  ₿  Bitcoin Donation Address  ₿   ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃                                    ┃
+┃   bc1qqphwht25vjzlptwzjyjt3sex    ┃
+┃   7e3p8twn390fkw                   ┃
+┃                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 
-Este es un proyecto de demostración arquitectónica.
+**Red**: Bitcoin (BTC)  
+**Dirección**: `bc1qqphwht25vjzlptwzjyjt3sex7e3p8twn390fkw`
+
+<div align="center">
+
+![QR Code](https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:bc1qqphwht25vjzlptwzjyjt3sex7e3p8twn390fkw)
+
+**Escanea el código QR para donar** 📱
+
+</div>
+
+---
+
+## 📄 Licencia
+
+Este proyecto está licenciado bajo la **Licencia MIT** - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+```
+MIT License
+
+Copyright (c) 2026 Gustavo Lobato Clara
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+```
+
+---
+
+## 👨‍💻 Autor
+
+**Gustavo Lobato Clara**
+
+- 🌐 LinkedIn: [gustavo-lobato-clara1982](https://www.linkedin.com/in/gustavo-lobato-clara1982/)
+- 📧 Email: gustavolobatoclara@gmail.com
+- 🐙 GitHub: [@murdok1982](https://github.com/murdok1982)
+- 📍 Ubicación: Valencia, España
+- 💼 Apasionado por la ciberseguridad y Python
+
+---
 
 ## 🤝 Contribuciones
 
-Ver [architecture_design.md](../brain/.../architecture_design.md) para detalles del diseño.
+Las contribuciones son bienvenidas. Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+---
+
+## 🙏 Agradecimientos
+
+- MITRE ATT&CK for Mobile framework
+- URLhaus (abuse.ch)
+- PhishTank (OpenDNS)
+- VirusTotal API
+- FastAPI community
+- Flutter/Kotlin developers
+
+---
+
+<div align="center">
+
+**⭐ Si este proyecto te resulta útil, considera darle una estrella en GitHub ⭐**
+
+Hecho con ❤️ y ☕ en Valencia, España
+
+</div>
