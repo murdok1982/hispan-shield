@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import hispan_shield_guardian  # noqa: F401
 from app.core.config import settings
 from app.api.v1.api import api_router
 
